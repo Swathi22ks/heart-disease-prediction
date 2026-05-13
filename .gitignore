@@ -3,7 +3,6 @@ __pycache__/
 *.pyo
 .ipynb_checkpoints/
 .env
-*.pkl
 *.joblib
 .DS_Store
 Thumbs.db
