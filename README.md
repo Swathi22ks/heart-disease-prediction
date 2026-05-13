@@ -5,12 +5,13 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)](https://python.org)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.6-orange?logo=scikit-learn)](https://scikit-learn.org)
-[![Streamlit App](https://img.shields.io/badge/Live%20Demo-Streamlit-red?logo=streamlit)](YOUR_STREAMLIT_URL_HERE)
+[![Streamlit App](https://img.shields.io/badge/Live%20Demo-Streamlit-red?logo=streamlit)]
+(https://heart-disease-prediction-ghnxstpz9ebcovr53hbykn.streamlit.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ---
 
-## 🌐 Live Demo → Coming Soon
+## 🌐 [Live Demo → Click Here](https://heart-disease-prediction-ghnxstpz9ebcovr53hbykn.streamlit.app)
 
 ---
 
