@@ -49,10 +49,9 @@ st.markdown("""
 # ── Load Models ───────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_models():
-    base = os.path.dirname(__file__)
-    model   = pickle.load(open(os.path.join(base, 'models/best_model.pkl'), 'rb'))
-    scaler  = pickle.load(open(os.path.join(base, 'models/scaler.pkl'),     'rb'))
-    imputer = pickle.load(open(os.path.join(base, 'models/imputer.pkl'),    'rb'))
+    model   = pickle.load(open('models/best_model.pkl', 'rb'))
+    scaler  = pickle.load(open('models/scaler.pkl',     'rb'))
+    imputer = pickle.load(open('models/imputer.pkl',    'rb'))
     return model, scaler, imputer
 
 model, scaler, imputer = load_models()
