@@ -49,9 +49,39 @@ st.markdown("""
 # ── Load Models ───────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_models():
-    model   = pickle.load(open('models/best_model.pkl', 'rb'))
-    scaler  = pickle.load(open('models/scaler.pkl',     'rb'))
-    imputer = pickle.load(open('models/imputer.pkl',    'rb'))
+    import pandas as pd
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.impute import SimpleImputer
+    from sklearn.linear_model import LogisticRegression
+    from imblearn.over_sampling import SMOTE
+
+    df = pd.read_csv('data/framingham.csv')
+    df.drop(['education'], axis=1, inplace=True)
+    df.rename(columns={'male': 'gender'}, inplace=True)
+
+    FEATURES = ['age','gender','currentSmoker','cigsPerDay','BPMeds',
+                'prevalentStroke','prevalentHyp','diabetes','totChol',
+                'sysBP','diaBP','BMI','heartRate','glucose']
+
+    X = df[FEATURES]
+    y = df['TenYearCHD']
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y)
+
+    imputer = SimpleImputer(strategy='median')
+    X_train_imp = imputer.fit_transform(X_train)
+
+    smote = SMOTE(random_state=42)
+    X_train_sm, y_train_sm = smote.fit_resample(X_train_imp, y_train)
+
+    scaler = StandardScaler()
+    X_train_sc = scaler.fit_transform(X_train_sm)
+
+    model = LogisticRegression(max_iter=1000, random_state=42)
+    model.fit(X_train_sc, y_train_sm)
+
     return model, scaler, imputer
 
 model, scaler, imputer = load_models()
