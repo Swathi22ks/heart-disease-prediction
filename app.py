@@ -20,29 +20,48 @@ st.set_page_config(
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-    .main { background: #f8fafc; }
+    .high-risk { 
+        background: linear-gradient(135deg, #ff6b6b, #ee0979);
+        color: white; padding: 20px; border-radius: 16px; text-align: center;
+    }
+    .low-risk  { 
+        background: linear-gradient(135deg, #56ab2f, #a8e063);
+        color: white; padding: 20px; border-radius: 16px; text-align: center;
+    }
     .metric-card {
-        background: white;
+        background: #2c2c2c;
         border-radius: 12px;
         padding: 20px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         border-left: 4px solid #e74c3c;
         margin-bottom: 10px;
     }
-    .high-risk { background: linear-gradient(135deg, #ff6b6b, #ee0979);
-                 color: white; padding: 20px; border-radius: 16px; text-align: center; }
-    .low-risk  { background: linear-gradient(135deg, #56ab2f, #a8e063);
-                 color: white; padding: 20px; border-radius: 16px; text-align: center; }
+    .metric-card h4 {
+        color: #ffffff !important;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .metric-card h2 {
+        color: #ffffff !important;
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    .metric-card p {
+        color: #cccccc !important;
+        font-size: 13px;
+    }
+    .metric-card ul {
+        color: #ffffff !important;
+    }
+    .metric-card li {
+        color: #ffffff !important;
+        font-size: 14px;
+    }
     .stButton>button {
         background: linear-gradient(135deg, #e74c3c, #c0392b);
         color: white; border: none; border-radius: 10px;
         padding: 14px 36px; font-size: 16px; font-weight: 600;
-        width: 100%; transition: transform 0.2s;
+        width: 100%;
     }
-    .stButton>button:hover { transform: translateY(-2px); }
-    h1 { color: #2c3e50; }
 </style>
 """, unsafe_allow_html=True)
 
