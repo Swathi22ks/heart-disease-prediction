@@ -29,11 +29,30 @@ st.markdown("""
         color: white; padding: 20px; border-radius: 16px; text-align: center;
     }
     .metric-card {
-        background: #2c2c2c;
-        border-radius: 12px;
+        background: white;
+        border-radius: 16px;
         padding: 20px;
-        border-left: 4px solid #e74c3c;
+        border: 2px solid #e8e8e8;
         margin-bottom: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .metric-card h4 {
+        color: #2c3e50 !important;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .metric-card h2 {
+        color: #e74c3c !important;
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    .metric-card p {
+        color: #666666 !important;
+        font-size: 13px;
+    }
+    .metric-card li {
+        color: #2c3e50 !important;
+        font-size: 14px;
     }
     .metric-card h4 {
         color: #ffffff !important;
