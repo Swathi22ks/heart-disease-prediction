@@ -241,5 +241,5 @@ with st.expander("📊 View Model Performance Metrics"):
         'Recall':      [0.5969, 0.3798, 0.1318, 0.1550, 0.1008],
     }
     perf_df = pd.DataFrame(perf_data).set_index('Model')
-    st.dataframe(perf_df.format('{:.4f}'), use_container_width=True)
+    st.dataframe(perf_df, use_container_width=True)
     st.caption("✅ Best model selected by AUC-ROC — most important metric for imbalanced medical data")
