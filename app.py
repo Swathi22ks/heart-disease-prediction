@@ -6,10 +6,7 @@ Author: Swathi K S | Dataset: Framingham Heart Study
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
-import os
 
-# ── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Heart Disease Risk Predictor",
     page_icon="❤️",
@@ -17,64 +14,20 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    .high-risk { 
+    .high-risk {
         background: linear-gradient(135deg, #ff6b6b, #ee0979);
         color: white; padding: 20px; border-radius: 16px; text-align: center;
     }
-    .low-risk  { 
+    .high-risk h2, .high-risk p, .high-risk h3 { color: white !important; }
+
+    .low-risk {
         background: linear-gradient(135deg, #56ab2f, #a8e063);
         color: white; padding: 20px; border-radius: 16px; text-align: center;
     }
-    .metric-card {
-        background: white;
-        border-radius: 16px;
-        padding: 20px;
-        border: 2px solid #e8e8e8;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .metric-card h4 {
-        color: #2c3e50 !important;
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-    .metric-card h2 {
-        color: #e74c3c !important;
-        font-size: 28px;
-        margin-bottom: 8px;
-    }
-    .metric-card p {
-        color: #666666 !important;
-        font-size: 13px;
-    }
-    .metric-card li {
-        color: #2c3e50 !important;
-        font-size: 14px;
-    }
-    .metric-card h4 {
-        color: #ffffff !important;
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-    .metric-card h2 {
-        color: #ffffff !important;
-        font-size: 28px;
-        margin-bottom: 8px;
-    }
-    .metric-card p {
-        color: #cccccc !important;
-        font-size: 13px;
-    }
-    .metric-card ul {
-        color: #ffffff !important;
-    }
-    .metric-card li {
-        color: #ffffff !important;
-        font-size: 14px;
-    }
+    .low-risk h2, .low-risk p, .low-risk h3 { color: white !important; }
+
     .stButton>button {
         background: linear-gradient(135deg, #e74c3c, #c0392b);
         color: white; border: none; border-radius: 10px;
@@ -84,10 +37,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ── Load Models ───────────────────────────────────────────────────────────────
+
 @st.cache_resource
 def load_models():
-    import pandas as pd
     from sklearn.model_selection import train_test_split
     from sklearn.preprocessing import StandardScaler
     from sklearn.impute import SimpleImputer
@@ -121,6 +73,7 @@ def load_models():
     model.fit(X_train_sc, y_train_sm)
 
     return model, scaler, imputer
+
 
 model, scaler, imputer = load_models()
 
@@ -172,11 +125,11 @@ with col2:
 
 with col3:
     st.markdown("**🩺 Medical History**")
-    prevalentStroke = st.selectbox("History of Stroke?",        ["No (0)", "Yes (1)"])
+    prevalentStroke = st.selectbox("History of Stroke?",       ["No (0)", "Yes (1)"])
     stroke_val      = 1 if "Yes" in prevalentStroke else 0
-    prevalentHyp    = st.selectbox("History of Hypertension?",  ["No (0)", "Yes (1)"])
+    prevalentHyp    = st.selectbox("History of Hypertension?", ["No (0)", "Yes (1)"])
     hyp_val         = 1 if "Yes" in prevalentHyp else 0
-    diabetes        = st.selectbox("Diabetic?",                  ["No (0)", "Yes (1)"])
+    diabetes        = st.selectbox("Diabetic?",                ["No (0)", "Yes (1)"])
     diabetes_val    = 1 if "Yes" in diabetes else 0
 
 st.markdown("---")
@@ -184,17 +137,17 @@ st.markdown("### 📊 Clinical Measurements")
 
 col4, col5, col6, col7 = st.columns(4)
 with col4:
-    totChol   = st.number_input("Total Cholesterol (mg/dL)", 100, 600, 230)
+    totChol  = st.number_input("Total Cholesterol (mg/dL)", 100, 600, 230)
 with col5:
-    sysBP     = st.number_input("Systolic BP (mmHg)",        80, 300, 120)
+    sysBP    = st.number_input("Systolic BP (mmHg)",        80,  300, 120)
 with col6:
-    diaBP     = st.number_input("Diastolic BP (mmHg)",       50, 200, 80)
+    diaBP    = st.number_input("Diastolic BP (mmHg)",       50,  200, 80)
 with col7:
-    BMI       = st.number_input("BMI", 10.0, 60.0, 25.0, step=0.1)
+    BMI      = st.number_input("BMI", 10.0, 60.0, 25.0, step=0.1)
 
 col8, col9 = st.columns(2)
 with col8:
-    heartRate = st.number_input("Heart Rate (bpm)", 40, 200, 75)
+    heartRate = st.number_input("Heart Rate (bpm)",       40, 200, 75)
 with col9:
     glucose   = st.number_input("Glucose Level (mg/dL)", 40, 400, 85)
 
@@ -216,6 +169,7 @@ if st.button("🔍 Predict CHD Risk"):
     st.markdown("## 🎯 Prediction Result")
 
     r1, r2, r3 = st.columns(3)
+
     with r1:
         if pred == 1:
             st.markdown(f"""<div class="high-risk">
@@ -231,47 +185,64 @@ if st.button("🔍 Predict CHD Risk"):
             </div>""", unsafe_allow_html=True)
 
     with r2:
-        st.markdown(f"""<div class="metric-card">
-        <h4>📈 Risk Probability</h4>
-        <h2>{prob*100:.1f}%</h2>
-        <p>Likelihood of CHD in 10 years</p>
+        st.markdown(f"""
+        <div style="background:#ffeaea; border-radius:16px; padding:20px;
+                    border-left:6px solid #e74c3c;">
+            <p style="color:#c0392b; font-size:15px; font-weight:700; margin:0 0 6px;">
+                📈 Risk Probability</p>
+            <p style="color:#c0392b; font-size:36px; font-weight:800; margin:0 0 6px;">
+                {prob*100:.1f}%</p>
+            <p style="color:#7b241c; font-size:13px; margin:0;">
+                Likelihood of CHD in 10 years</p>
         </div>""", unsafe_allow_html=True)
 
     with r3:
-        # Risk factors flagged
         flags = []
-        if age > 60: flags.append("Age > 60")
-        if sysBP > 140: flags.append("High Systolic BP")
-        if totChol > 240: flags.append("High Cholesterol")
-        if glucose > 126: flags.append("High Glucose")
-        if smoker_val and cigsPerDay > 10: flags.append("Heavy Smoker")
-        if BMI > 30: flags.append("Obesity (BMI>30)")
+        if age > 60:                        flags.append("Age > 60")
+        if sysBP > 140:                     flags.append("High Systolic BP")
+        if totChol > 240:                   flags.append("High Cholesterol")
+        if glucose > 126:                   flags.append("High Glucose")
+        if smoker_val and cigsPerDay > 10:  flags.append("Heavy Smoker")
+        if BMI > 30:                        flags.append("Obesity (BMI > 30)")
+
         if flags:
-            st.markdown(f"""<div class="metric-card">
-            <h4>🚨 Detected Risk Factors</h4>
-            <ul>{"".join(f"<li>{f}</li>" for f in flags)}</ul>
+            items = "".join(
+                f"<p style='color:#7d6608; font-size:13px; margin:4px 0;'>⚠️ {f}</p>"
+                for f in flags)
+            st.markdown(f"""
+            <div style="background:#fef9e7; border-radius:16px; padding:20px;
+                        border-left:6px solid #f39c12;">
+                <p style="color:#7d6608; font-size:15px; font-weight:700; margin:0 0 8px;">
+                    🚨 Risk Factors Detected</p>
+                {items}
             </div>""", unsafe_allow_html=True)
         else:
-            st.markdown("""<div class="metric-card">
-            <h4>✅ No Major Risk Flags</h4>
-            <p>No high-risk values detected in inputs</p>
+            st.markdown("""
+            <div style="background:#eafaf1; border-radius:16px; padding:20px;
+                        border-left:6px solid #2ecc71;">
+                <p style="color:#1e8449; font-size:15px; font-weight:700; margin:0 0 6px;">
+                    ✅ No Major Risk Flags</p>
+                <p style="color:#1e8449; font-size:13px; margin:0;">
+                    No high-risk values detected in inputs</p>
             </div>""", unsafe_allow_html=True)
 
     st.markdown("---")
     st.info("⚕️ **Disclaimer:** This prediction is for educational purposes only and should not replace professional medical advice. Please consult a qualified healthcare provider for any health concerns.")
 
-# ── Model Performance Section ─────────────────────────────────────────────────
+# ── Model Performance ─────────────────────────────────────────────────────────
 with st.expander("📊 View Model Performance Metrics"):
     st.markdown("### Model Comparison Table")
     perf_data = {
-        'Model':           ['Logistic Regression','Decision Tree','Random Forest','Gradient Boosting','XGBoost'],
-        'Accuracy':        [0.6639, 0.7700, 0.8172, 0.8208, 0.7983],
-        'AUC-ROC':         [0.6968, 0.6810, 0.6565, 0.6431, 0.5846],
-        'F1-Score':        [0.3508, 0.3345, 0.1799, 0.2083, 0.1320],
-        'Recall':          [0.5969, 0.3798, 0.1318, 0.1550, 0.1008],
+        'Model':       ['Logistic Regression','Decision Tree','Random Forest',
+                        'Gradient Boosting','XGBoost'],
+        'Accuracy':    [0.6639, 0.7700, 0.8172, 0.8208, 0.7983],
+        'AUC-ROC':     [0.6968, 0.6810, 0.6565, 0.6431, 0.5846],
+        'F1-Score':    [0.3508, 0.3345, 0.1799, 0.2083, 0.1320],
+        'Recall':      [0.5969, 0.3798, 0.1318, 0.1550, 0.1008],
     }
     perf_df = pd.DataFrame(perf_data).set_index('Model')
-    st.dataframe(perf_df.style.highlight_max(axis=0, color='#d4edda')
-                              .highlight_min(axis=0, color='#f8d7da')
-                              .format('{:.4f}'))
-    st.caption("✅ Best model selected by AUC-ROC (most important metric for imbalanced medical data)")
+    st.dataframe(perf_df.style
+                 .highlight_max(axis=0, color='#d4edda')
+                 .highlight_min(axis=0, color='#f8d7da')
+                 .format('{:.4f}'))
+    st.caption("✅ Best model selected by AUC-ROC — most important metric for imbalanced medical data")
