@@ -241,5 +241,56 @@ with st.expander("📊 View Model Performance Metrics"):
         'Recall':      [0.5969, 0.3798, 0.1318, 0.1550, 0.1008],
     }
     perf_df = pd.DataFrame(perf_data).set_index('Model')
-    st.dataframe(perf_df, use_container_width=True)
+    st.markdown("""
+    <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+            <tr style="background:#e74c3c; color:white;">
+                <th style="padding:12px; text-align:left;">Model</th>
+                <th style="padding:12px; text-align:center;">Accuracy</th>
+                <th style="padding:12px; text-align:center;">AUC-ROC</th>
+                <th style="padding:12px; text-align:center;">F1-Score</th>
+                <th style="padding:12px; text-align:center;">Recall</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background:#fef9e7;">
+                <td style="padding:12px; color:#2c3e50; font-weight:700;">⭐ Logistic Regression</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.6639</td>
+                <td style="padding:12px; text-align:center; color:#27ae60; font-weight:700;">0.6968</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.3508</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.5969</td>
+            </tr>
+            <tr style="background:#ffffff;">
+                <td style="padding:12px; color:#2c3e50;">Decision Tree</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.7700</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.6810</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.3345</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.3798</td>
+            </tr>
+            <tr style="background:#fef9e7;">
+                <td style="padding:12px; color:#2c3e50;">Random Forest</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.8172</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.6565</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.1799</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.1318</td>
+            </tr>
+            <tr style="background:#ffffff;">
+                <td style="padding:12px; color:#2c3e50;">Gradient Boosting</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.8208</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.6431</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.2083</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.1550</td>
+            </tr>
+            <tr style="background:#fef9e7;">
+                <td style="padding:12px; color:#2c3e50;">XGBoost</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.7983</td>
+                <td style="padding:12px; text-align:center; color:#e74c3c; font-weight:700;">0.5846</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.1320</td>
+                <td style="padding:12px; text-align:center; color:#2c3e50;">0.1008</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <p style="color:#27ae60; font-size:13px;">✅ Best model selected by AUC-ROC — most important metric for imbalanced medical data</p>
+    """, unsafe_allow_html=True)
     st.caption("✅ Best model selected by AUC-ROC — most important metric for imbalanced medical data")
